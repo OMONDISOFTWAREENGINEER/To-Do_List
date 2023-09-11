@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    
+    form {
+      margin-bottom: 20px;
+    }p
+    
+    input[type="text"] {
+      padding: 5px;
+      width: 200px;
+    }
+    
+    button {
+      padding: 5px 10px;
+    }
+    
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    li {
+      margin-bottom: 10px;
+    }
+    
+    button.completed {
+      background-color: green;
+      color: white;
+    }
+    
+    button.delete {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <form id="todo-form">
+      <input type="text" id="task-input" placeholder="Add a task...">
+      <button type="submit">Add Task</button>
+    </form>
+    <ul id="task-list"></ul>
+  </div>
+
+  <script>
+    // Selecting the necessary elements
+    const form = document.getElementById('todo-form');
+    const taskInput = document.getElementById('task-input');
+    const taskList = document.getElementById('task-list');
+
+    // Function to add a task
+    function addTask(event) {
+      event.preventDefault(); // Prevent form submission
+      
+      const taskText = taskInput.value.trim(); // Get input value and remove extra whitespace
+      
+      if (taskText !== '') {
+        // Create new list item
+        const listItem = document.createElement('li');
+        listItem.innerText = taskText;
+      
+        // Create buttons for completion and deletion
+        const completeButton = document.createElement('button');
+        completeButton.innerText = 'Complete';
+        completeButton.classList.add('completed');
+      
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.classList.add('delete');
+      
+        // Append buttons to list item
+        listItem.appendChild(completeButton);
+        listItem.appendChild(deleteButton);
+      
+        // Add list item to task list
+        taskList.appendChild(listItem);
+      
+        // Clear input field
+        taskInput.value = '';
+      
+        // Add event listener to complete button
+        completeButton.addEventListener('click', completeTask);
+        // Add event listener to delete button
+        deleteButton.addEventListener('click', deleteTask);
+      }
+    }
+    
+    // Function to complete a task
+    function completeTask(event) {
+      const listItem = event.target.parentElement;
+      listItem.classList.toggle('completed');
+    }
+    
+    // Function to delete a task
+    function deleteTask(event) {
+      const listItem = event.target.parentElement;
+      listItem.remove();
+    }
+    
+    // Add event listener to form submission
+    form.addEventListener('submit', addTask);
+  </script>
+</body>
+</html>
